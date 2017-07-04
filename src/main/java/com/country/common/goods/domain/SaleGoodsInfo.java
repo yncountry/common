@@ -2,6 +2,7 @@ package com.country.common.goods.domain;
 
 import cn.gfire.base.jpa.domain.BaseDomain;
 import com.country.common.emmun.UnitType;
+import com.country.common.extend.domain.Extend;
 import com.country.common.user.domain.User;
 import org.hibernate.cfg.annotations.Comment;
 import org.springframework.data.annotation.CreatedDate;
@@ -46,7 +47,7 @@ public class SaleGoodsInfo extends BaseDomain<Long> {
     private Integer saleCount;
 
     @Comment("代理人员")
-    @ManyToMany(mappedBy = "saleGoodsInfos")
+    @ManyToMany(mappedBy = "agentSaleGoods")
     private List<User> agents = new ArrayList<>();
 
     @Comment("代理单价")
@@ -75,6 +76,18 @@ public class SaleGoodsInfo extends BaseDomain<Long> {
     @CreatedDate
     private Date createDate;
 
+    @Comment("推广")
+    @OneToMany(mappedBy = "saleGoods")
+    private List<Extend> anExtends;
+
+
+    public List<Extend> getAnExtends() {
+        return anExtends;
+    }
+
+    public void setAnExtends(List<Extend> anExtends) {
+        this.anExtends = anExtends;
+    }
 
     public Long getGoodsId() {
         return goodsId;

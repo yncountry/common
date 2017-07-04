@@ -1,7 +1,7 @@
-package com.country.common.expand.dao;
+package com.country.common.extend.dao;
 
 import cn.gfire.base.jpa.dao.BaseRepository;
-import com.country.common.expand.domain.Expand;
+import com.country.common.extend.domain.Extend;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * @desc
  */
 @Repository
-public interface ExpandDao extends BaseRepository<Expand,Long> {
+public interface ExtendDao extends BaseRepository<Extend,Long> {
 }

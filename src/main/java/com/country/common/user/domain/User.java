@@ -3,11 +3,10 @@ package com.country.common.user.domain;
 import cn.gfire.base.jpa.domain.BaseDomain;
 import com.country.common.admin.domain.Role;
 import com.country.common.credit.domain.Credit;
-import com.country.common.expand.domain.Expand;
+import com.country.common.extend.domain.Extend;
 import com.country.common.goods.domain.SaleGoodsInfo;
 import org.hibernate.cfg.annotations.Comment;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -81,7 +80,7 @@ public class User extends BaseDomain<Long> {
 
     @OneToMany
     @JoinColumn(name = "EXPAND_ID")
-    private List<Expand> expands;
+    private List<Extend> expands;
 
     @OneToOne
     @JoinColumn(name = "ACCOUNT_ID")
@@ -100,30 +99,29 @@ public class User extends BaseDomain<Long> {
             joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "GOODS_ID")
     )
-    private List<SaleGoodsInfo> saleGoodsInfos = new ArrayList<>();
+    private List<SaleGoodsInfo> agentSaleGoods = new ArrayList<>();
 
-    @Comment("推广认证token")
-    private String extentAuthToken;
+    @OneToMany(mappedBy = "createUser")
+    private List<Extend> extendList = new ArrayList<>();
 
     @Comment("用户信用")
     @OneToOne(cascade = CascadeType.PERSIST)
     private Credit credit;
 
-
-    public List<SaleGoodsInfo> getSaleGoodsInfos() {
-        return saleGoodsInfos;
+    public List<SaleGoodsInfo> getAgentSaleGoods() {
+        return agentSaleGoods;
     }
 
-    public void setSaleGoodsInfos(List<SaleGoodsInfo> saleGoodsInfos) {
-        this.saleGoodsInfos = saleGoodsInfos;
+    public void setAgentSaleGoods(List<SaleGoodsInfo> agentSaleGoods) {
+        this.agentSaleGoods = agentSaleGoods;
     }
 
-    public String getExtentAuthToken() {
-        return extentAuthToken;
+    public List<Extend> getExtendList() {
+        return extendList;
     }
 
-    public void setExtentAuthToken(String extentAuthToken) {
-        this.extentAuthToken = extentAuthToken;
+    public void setExtendList(List<Extend> extendList) {
+        this.extendList = extendList;
     }
 
     public UserAccount getUserAccount() {
@@ -218,12 +216,20 @@ public class User extends BaseDomain<Long> {
         this.role = role;
     }
 
-    public List<Expand> getExpands() {
+    public List<Extend> getExpands() {
         return expands;
     }
 
-    public void setExpands(List<Expand> expands) {
+    public void setExpands(List<Extend> expands) {
         this.expands = expands;
+    }
+
+    public Credit getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Credit credit) {
+        this.credit = credit;
     }
 
     public void setUpdateTime(Date updateTime) {
